@@ -3,18 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Quote</title>
+    <title>Dwight's Daily Quote</title>
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f6efe7;
-        --ink: #213547;
-        --muted: #5c6b73;
-        --card: rgba(255, 250, 244, 0.78);
-        --line: rgba(33, 53, 71, 0.12);
-        --gold: #d88c34;
-        --teal: #2f8f83;
-        --coral: #f06c5f;
+        color-scheme: dark;
+        --bg: #07111f;
+        --bg-deep: #02060d;
+        --ink: #eff7ff;
+        --muted: #8ca0b8;
+        --card: rgba(8, 18, 34, 0.78);
+        --line: rgba(132, 165, 204, 0.16);
+        --gold: #ffb85c;
+        --teal: #52d6c5;
+        --coral: #ff8b7b;
+        --glow: rgba(82, 214, 197, 0.18);
       }
 
       * {
@@ -27,9 +29,9 @@
         padding: 24px;
         font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
         background:
-          radial-gradient(circle at top left, rgba(216, 140, 52, 0.22), transparent 30%),
-          radial-gradient(circle at bottom right, rgba(47, 143, 131, 0.2), transparent 32%),
-          linear-gradient(160deg, #fff7ef 0%, var(--bg) 54%, #eef7f5 100%);
+          radial-gradient(circle at top left, rgba(255, 184, 92, 0.16), transparent 24%),
+          radial-gradient(circle at bottom right, rgba(82, 214, 197, 0.12), transparent 26%),
+          linear-gradient(160deg, #0d1930 0%, var(--bg) 45%, var(--bg-deep) 100%);
         color: var(--ink);
         overflow-x: hidden;
       }
@@ -49,7 +51,7 @@
         left: -60px;
         width: 180px;
         height: 180px;
-        background: rgba(240, 108, 95, 0.18);
+        background: rgba(255, 139, 123, 0.18);
       }
 
       body::after {
@@ -57,7 +59,7 @@
         bottom: 80px;
         width: 210px;
         height: 210px;
-        background: rgba(47, 143, 131, 0.18);
+        background: rgba(82, 214, 197, 0.16);
       }
 
       .shell {
@@ -84,9 +86,9 @@
         gap: 10px;
         padding: 10px 14px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.55);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 10px 26px rgba(33, 53, 71, 0.07);
+        background: rgba(16, 31, 56, 0.72);
+        border: 1px solid rgba(132, 165, 204, 0.18);
+        box-shadow: 0 14px 34px rgba(2, 6, 13, 0.36);
       }
 
       .dot {
@@ -101,9 +103,9 @@
         position: relative;
         overflow: hidden;
         border-radius: 34px;
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(132, 165, 204, 0.16);
         background: var(--card);
-        box-shadow: 0 30px 80px rgba(33, 53, 71, 0.12);
+        box-shadow: 0 30px 80px rgba(2, 6, 13, 0.5);
         backdrop-filter: blur(14px);
       }
 
@@ -112,8 +114,8 @@
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(135deg, rgba(216, 140, 52, 0.12), transparent 35%),
-          linear-gradient(315deg, rgba(47, 143, 131, 0.1), transparent 28%);
+          linear-gradient(135deg, rgba(255, 184, 92, 0.09), transparent 35%),
+          linear-gradient(315deg, rgba(82, 214, 197, 0.08), transparent 28%);
         pointer-events: none;
       }
 
@@ -160,7 +162,9 @@
         padding: 26px;
         border: 1px solid var(--line);
         border-radius: 28px;
-        background: rgba(255, 255, 255, 0.45);
+        background:
+          linear-gradient(180deg, rgba(18, 33, 56, 0.92), rgba(9, 19, 36, 0.9));
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         transform: translateY(14px);
         opacity: 0;
         animation: rise 700ms ease forwards;
@@ -202,16 +206,17 @@
         border: 0;
         border-radius: 999px;
         padding: 12px 18px;
-        background: var(--ink);
-        color: #fff;
+        background: linear-gradient(135deg, var(--teal), #2ca3ff);
+        color: #08111f;
         cursor: pointer;
         font: inherit;
+        font-weight: 700;
         font-family: "Trebuchet MS", "Segoe UI", sans-serif;
         transition:
           transform 160ms ease,
           opacity 160ms ease,
           box-shadow 160ms ease;
-        box-shadow: 0 12px 24px rgba(33, 53, 71, 0.16);
+        box-shadow: 0 16px 30px var(--glow);
       }
 
       .button:hover {
@@ -260,17 +265,17 @@
           <span class="dot"></span>
           <span>Updated automatically every day</span>
         </div>
-        <p class="note">A simple quote site powered by GitHub Actions</p>
+        <p class="note">Dwight's shareable quote page powered by GitHub Actions</p>
       </div>
 
       <main class="frame">
         <section class="card">
           <div class="hero">
-            <p class="eyebrow">Daily Inspiration</p>
-            <h1>One quote. Every day.</h1>
+            <p class="eyebrow">Dwight's Daily Inspiration</p>
+            <h1>One good quote for every day.</h1>
             <p class="subcopy">
-              This page refreshes with a new quote selected by your automation, so
-              you always have something simple and thoughtful to share.
+              This page refreshes with a new quote selected by your automation, giving
+              you a dark, simple space you can share with anyone.
             </p>
           </div>
 
