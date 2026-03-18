@@ -7,12 +7,14 @@
     <style>
       :root {
         color-scheme: light;
-        --bg-start: #fef6e4;
-        --bg-end: #dff8eb;
-        --card: rgba(255, 255, 255, 0.78);
-        --text: #172c66;
-        --accent: #f582ae;
-        --muted: #5f6c7b;
+        --bg: #f6efe7;
+        --ink: #213547;
+        --muted: #5c6b73;
+        --card: rgba(255, 250, 244, 0.78);
+        --line: rgba(33, 53, 71, 0.12);
+        --gold: #d88c34;
+        --teal: #2f8f83;
+        --coral: #f06c5f;
       }
 
       * {
@@ -22,67 +24,273 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
         padding: 24px;
-        font-family: Georgia, "Times New Roman", serif;
-        background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-        color: var(--text);
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        background:
+          radial-gradient(circle at top left, rgba(216, 140, 52, 0.22), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(47, 143, 131, 0.2), transparent 32%),
+          linear-gradient(160deg, #fff7ef 0%, var(--bg) 54%, #eef7f5 100%);
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(10px);
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      body::before {
+        top: 72px;
+        left: -60px;
+        width: 180px;
+        height: 180px;
+        background: rgba(240, 108, 95, 0.18);
+      }
+
+      body::after {
+        right: -40px;
+        bottom: 80px;
+        width: 210px;
+        height: 210px;
+        background: rgba(47, 143, 131, 0.18);
+      }
+
+      .shell {
+        width: min(980px, 100%);
+        margin: 0 auto;
+        display: grid;
+        gap: 18px;
+        align-content: center;
+        min-height: calc(100vh - 48px);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--muted);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 10px 26px rgba(33, 53, 71, 0.07);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 0 8px rgba(47, 143, 131, 0.12);
+      }
+
+      .frame {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        background: var(--card);
+        box-shadow: 0 30px 80px rgba(33, 53, 71, 0.12);
+        backdrop-filter: blur(14px);
+      }
+
+      .frame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(216, 140, 52, 0.12), transparent 35%),
+          linear-gradient(315deg, rgba(47, 143, 131, 0.1), transparent 28%);
+        pointer-events: none;
       }
 
       .card {
-        width: min(720px, 100%);
-        padding: 32px;
-        border-radius: 28px;
-        background: var(--card);
-        box-shadow: 0 24px 60px rgba(23, 44, 102, 0.14);
-        backdrop-filter: blur(10px);
+        position: relative;
+        display: grid;
+        gap: 28px;
+        padding: 34px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 14px;
       }
 
       .eyebrow {
-        margin: 0 0 12px;
-        font-size: 0.95rem;
-        letter-spacing: 0.08em;
+        margin: 0;
+        font-size: 0.82rem;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--muted);
+        color: var(--gold);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       }
 
       h1 {
-        margin: 0 0 20px;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        line-height: 1;
+        margin: 0;
+        max-width: 9ch;
+        font-size: clamp(2.5rem, 7vw, 5.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+      }
+
+      .subcopy {
+        margin: 0;
+        max-width: 42ch;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      .quote-panel {
+        display: grid;
+        gap: 20px;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.45);
+        transform: translateY(14px);
+        opacity: 0;
+        animation: rise 700ms ease forwards;
       }
 
       blockquote {
         margin: 0;
-        font-size: clamp(1.4rem, 3vw, 2rem);
-        line-height: 1.5;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1.45;
       }
 
       .author {
-        margin-top: 18px;
-        font-size: 1.1rem;
-        color: var(--accent);
+        margin: 0;
+        font-size: 1rem;
+        color: var(--coral);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
         font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding-top: 4px;
       }
 
       .meta {
-        margin-top: 24px;
+        margin: 0;
         color: var(--muted);
         font-size: 0.95rem;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .button {
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 18px;
+        background: var(--ink);
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        transition:
+          transform 160ms ease,
+          opacity 160ms ease,
+          box-shadow 160ms ease;
+        box-shadow: 0 12px 24px rgba(33, 53, 71, 0.16);
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+        opacity: 0.95;
+      }
+
+      .button:active {
+        transform: translateY(1px);
+      }
+
+      .note {
+        margin: 0;
+        font-size: 0.92rem;
+        color: var(--muted);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      @keyframes rise {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 16px;
+        }
+
+        .card {
+          padding: 22px;
+        }
+
+        .topbar,
+        .footer {
+          align-items: flex-start;
+        }
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <p class="eyebrow">Automated by GitHub Actions</p>
-      <h1>Daily Quote</h1>
-      <blockquote id="quote">Loading today's quote...</blockquote>
-      <p class="author" id="author"></p>
-      <p class="meta" id="updated"></p>
-    </main>
+    <div class="shell">
+      <div class="topbar">
+        <div class="badge">
+          <span class="dot"></span>
+          <span>Updated automatically every day</span>
+        </div>
+        <p class="note">A simple quote site powered by GitHub Actions</p>
+      </div>
+
+      <main class="frame">
+        <section class="card">
+          <div class="hero">
+            <p class="eyebrow">Daily Inspiration</p>
+            <h1>One quote. Every day.</h1>
+            <p class="subcopy">
+              This page refreshes with a new quote selected by your automation, so
+              you always have something simple and thoughtful to share.
+            </p>
+          </div>
+
+          <section class="quote-panel">
+            <blockquote id="quote">Loading today's quote...</blockquote>
+            <p class="author" id="author"></p>
+            <div class="footer">
+              <p class="meta" id="updated"></p>
+              <button class="button" id="share-button" type="button">
+                Copy Site Link
+              </button>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
 
     <script>
+      const shareButton = document.getElementById("share-button");
+
       async function loadQuote() {
         const response = await fetch("./latest-quote.json", { cache: "no-store" });
         const data = await response.json();
@@ -93,12 +301,27 @@
           "Last updated: " + data.updated_at;
       }
 
+      async function copySiteLink() {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          shareButton.textContent = "Link Copied";
+          window.setTimeout(() => {
+            shareButton.textContent = "Copy Site Link";
+          }, 1600);
+        } catch {
+          shareButton.textContent = "Copy failed";
+        }
+      }
+
+      shareButton.addEventListener("click", copySiteLink);
+
       loadQuote().catch(() => {
         document.getElementById("quote").textContent =
           "The quote could not be loaded yet.";
         document.getElementById("author").textContent = "";
         document.getElementById("updated").textContent =
           "Push this project to GitHub and enable GitHub Pages to view it online.";
+        shareButton.disabled = true;
       });
     </script>
   </body>
