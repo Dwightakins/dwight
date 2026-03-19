@@ -3,20 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dwight's Daily Quote</title>
+    <title>Dwight Calculator</title>
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #07111f;
-        --bg-deep: #02060d;
-        --ink: #eff7ff;
-        --muted: #8ca0b8;
-        --card: rgba(8, 18, 34, 0.78);
-        --line: rgba(132, 165, 204, 0.16);
-        --gold: #ffb85c;
-        --teal: #52d6c5;
-        --coral: #ff8b7b;
-        --glow: rgba(82, 214, 197, 0.18);
+        color-scheme: light;
+        --bg: #f5efe4;
+        --bg-accent: #e2c48d;
+        --surface: rgba(255, 250, 240, 0.88);
+        --surface-strong: #fffdf7;
+        --ink: #1e1b18;
+        --muted: #6c6258;
+        --line: rgba(71, 55, 34, 0.14);
+        --primary: #0f766e;
+        --primary-deep: #0b4f49;
+        --warm: #c97a2b;
+        --danger: #b45309;
+        --shadow: 0 22px 60px rgba(89, 68, 36, 0.16);
       }
 
       * {
@@ -26,321 +28,835 @@
       body {
         margin: 0;
         min-height: 100vh;
-        padding: 24px;
-        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-        background:
-          radial-gradient(circle at top left, rgba(255, 184, 92, 0.16), transparent 24%),
-          radial-gradient(circle at bottom right, rgba(82, 214, 197, 0.12), transparent 26%),
-          linear-gradient(160deg, #0d1930 0%, var(--bg) 45%, var(--bg-deep) 100%);
+        font-family: Georgia, "Times New Roman", serif;
         color: var(--ink);
-        overflow-x: hidden;
-      }
-
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        border-radius: 999px;
-        filter: blur(10px);
-        opacity: 0.7;
-        pointer-events: none;
-      }
-
-      body::before {
-        top: 72px;
-        left: -60px;
-        width: 180px;
-        height: 180px;
-        background: rgba(255, 139, 123, 0.18);
-      }
-
-      body::after {
-        right: -40px;
-        bottom: 80px;
-        width: 210px;
-        height: 210px;
-        background: rgba(82, 214, 197, 0.16);
-      }
-
-      .shell {
-        width: min(980px, 100%);
-        margin: 0 auto;
-        display: grid;
-        gap: 18px;
-        align-content: center;
-        min-height: calc(100vh - 48px);
-      }
-
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        color: var(--muted);
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 14px;
-        border-radius: 999px;
-        background: rgba(16, 31, 56, 0.72);
-        border: 1px solid rgba(132, 165, 204, 0.18);
-        box-shadow: 0 14px 34px rgba(2, 6, 13, 0.36);
-      }
-
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: var(--teal);
-        box-shadow: 0 0 0 8px rgba(47, 143, 131, 0.12);
-      }
-
-      .frame {
-        position: relative;
-        overflow: hidden;
-        border-radius: 34px;
-        border: 1px solid rgba(132, 165, 204, 0.16);
-        background: var(--card);
-        box-shadow: 0 30px 80px rgba(2, 6, 13, 0.5);
-        backdrop-filter: blur(14px);
-      }
-
-      .frame::before {
-        content: "";
-        position: absolute;
-        inset: 0;
         background:
-          linear-gradient(135deg, rgba(255, 184, 92, 0.09), transparent 35%),
-          linear-gradient(315deg, rgba(82, 214, 197, 0.08), transparent 28%);
-        pointer-events: none;
+          radial-gradient(circle at top left, rgba(201, 122, 43, 0.16), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.14), transparent 22%),
+          linear-gradient(145deg, var(--bg) 0%, #efe3cc 48%, #fbf8f1 100%);
       }
 
-      .card {
-        position: relative;
-        display: grid;
-        gap: 28px;
-        padding: 34px;
+      .page {
+        width: min(1160px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
       }
 
-      .hero {
+      .masthead {
         display: grid;
         gap: 14px;
+        margin-bottom: 20px;
       }
 
       .eyebrow {
         margin: 0;
-        font-size: 0.82rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--gold);
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        font: 700 0.8rem/1.2 "Trebuchet MS", "Segoe UI", sans-serif;
+        color: var(--warm);
       }
 
       h1 {
         margin: 0;
-        max-width: 9ch;
-        font-size: clamp(2.5rem, 7vw, 5.5rem);
-        line-height: 0.95;
-        letter-spacing: -0.04em;
+        max-width: 10ch;
+        font-size: clamp(2.8rem, 7vw, 5.6rem);
+        line-height: 0.94;
       }
 
-      .subcopy {
+      .lede {
         margin: 0;
-        max-width: 42ch;
+        max-width: 60ch;
         color: var(--muted);
-        font-size: 1.05rem;
-        line-height: 1.6;
+        font: 1.05rem/1.7 "Trebuchet MS", "Segoe UI", sans-serif;
       }
 
-      .quote-panel {
+      .layout {
         display: grid;
+        grid-template-columns: minmax(290px, 420px) minmax(0, 1fr);
         gap: 20px;
-        padding: 26px;
+      }
+
+      .panel {
+        background: var(--surface);
         border: 1px solid var(--line);
         border-radius: 28px;
-        background:
-          linear-gradient(180deg, rgba(18, 33, 56, 0.92), rgba(9, 19, 36, 0.9));
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-        transform: translateY(14px);
-        opacity: 0;
-        animation: rise 700ms ease forwards;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
       }
 
-      blockquote {
-        margin: 0;
-        font-size: clamp(1.6rem, 3vw, 2.4rem);
-        line-height: 1.45;
+      .calculator {
+        padding: 22px;
+        display: grid;
+        gap: 16px;
       }
 
-      .author {
-        margin: 0;
-        font-size: 1rem;
-        color: var(--coral);
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-        font-weight: 700;
-        letter-spacing: 0.06em;
+      .display-wrap {
+        padding: 18px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 240, 225, 0.92));
+        border: 1px solid rgba(71, 55, 34, 0.1);
+      }
+
+      .display-label {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font: 700 0.75rem/1 "Trebuchet MS", "Segoe UI", sans-serif;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
-      .footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-        padding-top: 4px;
-      }
-
-      .meta {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.95rem;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-      }
-
-      .source {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.88rem;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-      }
-
-      .button {
+      #expression,
+      #result {
+        width: 100%;
         border: 0;
-        border-radius: 999px;
-        padding: 12px 18px;
-        background: linear-gradient(135deg, var(--teal), #2ca3ff);
-        color: #08111f;
+        background: transparent;
+        color: var(--ink);
+        text-align: right;
+      }
+
+      #expression {
+        min-height: 38px;
+        resize: vertical;
+        font: 1.1rem/1.45 "Trebuchet MS", "Segoe UI", sans-serif;
+        outline: none;
+      }
+
+      #result {
+        font: 700 clamp(2rem, 6vw, 3.2rem)/1.1 Georgia, "Times New Roman", serif;
+        outline: none;
+      }
+
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
         cursor: pointer;
-        font: inherit;
-        font-weight: 700;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        border-radius: 18px;
+        min-height: 62px;
+        padding: 14px 12px;
+        color: var(--ink);
+        background: var(--surface-strong);
+        box-shadow: inset 0 -2px 0 rgba(71, 55, 34, 0.05);
+        font: 700 1.05rem/1 "Trebuchet MS", "Segoe UI", sans-serif;
         transition:
-          transform 160ms ease,
-          opacity 160ms ease,
-          box-shadow 160ms ease;
-        box-shadow: 0 16px 30px var(--glow);
+          transform 150ms ease,
+          box-shadow 150ms ease,
+          background 150ms ease;
       }
 
-      .button:hover {
+      button:hover {
         transform: translateY(-1px);
-        opacity: 0.95;
       }
 
-      .button:active {
+      button:active {
         transform: translateY(1px);
       }
 
-      .note {
-        margin: 0;
-        font-size: 0.92rem;
-        color: var(--muted);
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      .key-wide {
+        grid-column: span 2;
       }
 
-      @keyframes rise {
-        to {
-          transform: translateY(0);
-          opacity: 1;
+      .key-op {
+        background: rgba(201, 122, 43, 0.12);
+        color: #7a450d;
+      }
+
+      .key-action {
+        background: rgba(15, 118, 110, 0.12);
+        color: var(--primary-deep);
+      }
+
+      .key-equals {
+        background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+        color: #f5fffd;
+      }
+
+      .assistant {
+        padding: 24px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .assistant-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .assistant-top h2,
+      .assistant-block h3 {
+        margin: 0;
+      }
+
+      .pill {
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: rgba(15, 118, 110, 0.1);
+        color: var(--primary-deep);
+        font: 700 0.82rem/1 "Trebuchet MS", "Segoe UI", sans-serif;
+        white-space: nowrap;
+      }
+
+      .assistant-copy {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font: 0.98rem/1.6 "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .assistant-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .assistant-block {
+        padding: 18px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 12px;
+      }
+
+      .assistant-text,
+      .history-list,
+      .examples {
+        margin: 0;
+        color: var(--ink);
+        font: 0.98rem/1.7 "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .assistant-text strong {
+        color: var(--primary-deep);
+      }
+
+      .history-list {
+        padding-left: 18px;
+      }
+
+      .history-list li + li {
+        margin-top: 8px;
+      }
+
+      .examples {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        border-radius: 999px;
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        background: rgba(15, 118, 110, 0.06);
+        color: var(--primary-deep);
+        padding: 10px 14px;
+        font: 700 0.9rem/1 "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .status {
+        margin: 0;
+        min-height: 24px;
+        color: var(--danger);
+        font: 700 0.92rem/1.5 "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .footer-note {
+        margin: 0;
+        color: var(--muted);
+        font: 0.92rem/1.6 "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      @media (max-width: 900px) {
+        .layout,
+        .assistant-grid {
+          grid-template-columns: 1fr;
         }
       }
 
-      @media (max-width: 640px) {
-        body {
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 18px, 100%);
+          padding-top: 18px;
+        }
+
+        .calculator,
+        .assistant {
           padding: 16px;
         }
 
-        .card {
-          padding: 22px;
+        button {
+          min-height: 58px;
         }
 
-        .topbar,
-        .footer {
-          align-items: flex-start;
+        .assistant-top {
+          flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
-    <div class="shell">
-      <div class="topbar">
-        <div class="badge">
-          <span class="dot"></span>
-          <span>Updated automatically every day</span>
-        </div>
-      </div>
+    <div class="page">
+      <header class="masthead">
+        <p class="eyebrow">Dwight Calculator</p>
+        <h1>A real calculator that talks like a person.</h1>
+        <p class="lede">
+          Type a math expression, press the calculator buttons, or use the example chips.
+          The app solves the problem and explains what happened in plain English.
+        </p>
+      </header>
 
-      <main class="frame">
-        <section class="card">
-          <div class="hero">
-            <p class="eyebrow">Dwight's Daily Inspiration</p>
-            <h1>One good quote for every day.</h1>
+      <main class="layout">
+        <section class="panel calculator" aria-label="Calculator">
+          <div class="display-wrap">
+            <p class="display-label">Expression</p>
+            <textarea
+              id="expression"
+              rows="2"
+              spellcheck="false"
+              aria-label="Calculator expression"
+              placeholder="Try something like (12 + 8) / 4"
+            ></textarea>
+            <p class="display-label">Result</p>
+            <input id="result" type="text" value="0" readonly aria-label="Result" />
           </div>
 
-          <section class="quote-panel">
-            <blockquote id="quote">Loading today's quote...</blockquote>
-            <p class="author" id="author"></p>
-            <p class="source" id="source"></p>
-            <div class="footer">
-              <p class="meta" id="updated"></p>
-              <button class="button" id="share-button" type="button">
-                Copy Site Link
-              </button>
+          <div class="keypad" aria-label="Calculator buttons">
+            <button class="key-action" data-action="clear">AC</button>
+            <button class="key-action" data-action="backspace">DEL</button>
+            <button class="key-op" data-value="(">(</button>
+            <button class="key-op" data-value=")">)</button>
+
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+            <button class="key-op" data-value="/">/</button>
+
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+            <button class="key-op" data-value="*">*</button>
+
+            <button data-value="1">1</button>
+            <button data-value="2">2</button>
+            <button data-value="3">3</button>
+            <button class="key-op" data-value="-">-</button>
+
+            <button class="key-wide" data-value="0">0</button>
+            <button data-value=".">.</button>
+            <button class="key-op" data-value="+">+</button>
+
+            <button class="key-action key-wide" data-action="percent">%</button>
+            <button class="key-action" data-action="negate">+/-</button>
+            <button class="key-equals" data-action="evaluate">=</button>
+          </div>
+
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+          <p class="footer-note">
+            Supported operators: addition, subtraction, multiplication, division, decimals,
+            parentheses, and percent.
+          </p>
+        </section>
+
+        <section class="panel assistant" aria-label="Explanation panel">
+          <div class="assistant-top">
+            <div>
+              <h2>Plain-English Math Helper</h2>
+              <p class="assistant-copy">
+                Every answer comes with a simple explanation and a short breakdown of the steps.
+              </p>
             </div>
-          </section>
+            <div class="pill" id="summary-pill">Ready for a calculation</div>
+          </div>
+
+          <div class="assistant-grid">
+            <section class="assistant-block">
+              <h3>Explanation</h3>
+              <p class="assistant-text" id="explanation">
+                Enter a calculation and I will explain the result in everyday language.
+              </p>
+            </section>
+
+            <section class="assistant-block">
+              <h3>Step Breakdown</h3>
+              <ol class="history-list" id="steps">
+                <li>Type an expression such as <strong>12 + 8 / 4</strong>.</li>
+                <li>Press <strong>=</strong> or hit the <strong>Enter</strong> key.</li>
+                <li>Read the result and plain-English summary here.</li>
+              </ol>
+            </section>
+
+            <section class="assistant-block">
+              <h3>Recent Calculations</h3>
+              <ol class="history-list" id="history">
+                <li>No calculations yet.</li>
+              </ol>
+            </section>
+
+            <section class="assistant-block">
+              <h3>Quick Examples</h3>
+              <div class="examples">
+                <button class="chip" data-example="12 + 8 / 4" type="button">12 + 8 / 4</button>
+                <button class="chip" data-example="(18 - 6) * 3" type="button">(18 - 6) * 3</button>
+                <button class="chip" data-example="150 * 15%" type="button">150 * 15%</button>
+                <button class="chip" data-example="42 / (7 - 1)" type="button">42 / (7 - 1)</button>
+              </div>
+            </section>
+          </div>
         </section>
       </main>
     </div>
 
     <script>
-      window.__QUOTE_DATA__ = {
-        "date": "2026-03-19",
-        "updated_at": "2026-03-19 08:17:12 UTC",
-        "quote": "We never know how high we are till we are called to rise. Then if we are true to form our statures touch the skies.",
-        "author": "Emily Dickinson",
-        "source": "ZenQuotes"
-      };
+      const expressionInput = document.getElementById("expression");
+      const resultInput = document.getElementById("result");
+      const explanationNode = document.getElementById("explanation");
+      const stepsNode = document.getElementById("steps");
+      const historyNode = document.getElementById("history");
+      const statusNode = document.getElementById("status");
+      const summaryPill = document.getElementById("summary-pill");
+      const history = [];
 
-      const shareButton = document.getElementById("share-button");
-
-      function loadQuote() {
-        const data = window.__QUOTE_DATA__;
-        document.getElementById("quote").textContent = '"' + data.quote + '"';
-        document.getElementById("author").textContent = "- " + data.author;
-        document.getElementById("source").textContent = "Source: " + data.source;
-        document.getElementById("updated").textContent =
-          "Last updated: " + data.updated_at;
+      function normalizeOperators(raw) {
+        return raw
+          .replace(/[×x]/g, "*")
+          .replace(/[÷]/g, "/")
+          .replace(/[−–]/g, "-")
+          .replace(/\s+/g, " ")
+          .trim();
       }
 
-      async function copySiteLink() {
+      function tokenize(expression) {
+        const tokens = [];
+        let i = 0;
+
+        while (i < expression.length) {
+          const char = expression[i];
+
+          if (char === " ") {
+            i += 1;
+            continue;
+          }
+
+          if ("()+-*/%".includes(char)) {
+            if (
+              char === "-" &&
+              (tokens.length === 0 ||
+                (tokens[tokens.length - 1].type === "operator" &&
+                  tokens[tokens.length - 1].value !== "%") ||
+                (tokens[tokens.length - 1].type === "paren" &&
+                  tokens[tokens.length - 1].value === "("))
+            ) {
+              if (expression[i + 1] === "(") {
+                tokens.push({ type: "number", value: -1, raw: "-1" });
+                tokens.push({ type: "operator", value: "*" });
+                i += 1;
+                continue;
+              }
+
+              let number = "-";
+              i += 1;
+              while (i < expression.length && /[\d.]/.test(expression[i])) {
+                number += expression[i];
+                i += 1;
+              }
+
+              if (number === "-") {
+                throw new Error("The minus sign needs a number after it.");
+              }
+
+              if (!/^[-]?\d*\.?\d+$/.test(number)) {
+                throw new Error("That negative number is not valid.");
+              }
+
+              tokens.push({ type: "number", value: Number(number), raw: number });
+              continue;
+            }
+
+            if (char === "(" || char === ")") {
+              tokens.push({ type: "paren", value: char });
+            } else {
+              tokens.push({ type: "operator", value: char });
+            }
+            i += 1;
+            continue;
+          }
+
+          if (/[\d.]/.test(char)) {
+            let number = "";
+            while (i < expression.length && /[\d.]/.test(expression[i])) {
+              number += expression[i];
+              i += 1;
+            }
+
+            if (!/^\d*\.?\d+$/.test(number)) {
+              throw new Error("One of the numbers is not written correctly.");
+            }
+
+            tokens.push({ type: "number", value: Number(number), raw: number });
+            continue;
+          }
+
+          throw new Error(`I do not understand "${char}" in this expression.`);
+        }
+
+        return tokens;
+      }
+
+      function toPostfix(tokens) {
+        const output = [];
+        const operators = [];
+        const precedence = { "+": 1, "-": 1, "*": 2, "/": 2, "%": 3 };
+
+        for (const token of tokens) {
+          if (token.type === "number") {
+            output.push(token);
+            continue;
+          }
+
+          if (token.type === "operator" && token.value === "%") {
+            output.push(token);
+            continue;
+          }
+
+          if (token.type === "operator") {
+            while (operators.length > 0) {
+              const top = operators[operators.length - 1];
+              if (
+                top.type === "operator" &&
+                top.value !== "%" &&
+                precedence[top.value] >= precedence[token.value]
+              ) {
+                output.push(operators.pop());
+              } else {
+                break;
+              }
+            }
+            operators.push(token);
+            continue;
+          }
+
+          if (token.type === "paren" && token.value === "(") {
+            operators.push(token);
+            continue;
+          }
+
+          if (token.type === "paren" && token.value === ")") {
+            let matched = false;
+            while (operators.length > 0) {
+              const top = operators.pop();
+              if (top.type === "paren" && top.value === "(") {
+                matched = true;
+                break;
+              }
+              output.push(top);
+            }
+
+            if (!matched) {
+              throw new Error("There is a closing parenthesis without a matching opening one.");
+            }
+          }
+        }
+
+        while (operators.length > 0) {
+          const top = operators.pop();
+          if (top.type === "paren") {
+            throw new Error("One of the parentheses is still open.");
+          }
+          output.push(top);
+        }
+
+        return output;
+      }
+
+      function formatNumber(value) {
+        if (!Number.isFinite(value)) {
+          return "undefined";
+        }
+
+        const rounded = Math.abs(value) < 1e-10 ? 0 : value;
+        return Number(rounded.toFixed(10)).toString();
+      }
+
+      function operandPhrase(token) {
+        return token.percent
+          ? `${token.display} percent`
+          : token.display;
+      }
+
+      function evaluatePostfix(postfix) {
+        const stack = [];
+        const steps = [];
+
+        for (const token of postfix) {
+          if (token.type === "number") {
+            stack.push({
+              value: token.value,
+              display: formatNumber(token.value),
+              phrase: formatNumber(token.value),
+              percent: false,
+            });
+            continue;
+          }
+
+          if (token.type === "operator" && token.value === "%") {
+            const last = stack.pop();
+            if (!last) {
+              throw new Error("The percent sign needs a number before it.");
+            }
+
+            const percentValue = last.value / 100;
+            const display = formatNumber(percentValue);
+            stack.push({
+              value: percentValue,
+              display,
+              phrase: `${last.display}%`,
+              percent: true,
+            });
+            steps.push(
+              `${last.display}% means ${last.display} out of 100, so it becomes ${display}.`
+            );
+            continue;
+          }
+
+          const right = stack.pop();
+          const left = stack.pop();
+
+          if (!left || !right) {
+            throw new Error("This expression is incomplete.");
+          }
+
+          let value = 0;
+          let sentence = "";
+
+          if (token.value === "+") {
+            value = left.value + right.value;
+            sentence = `Add ${operandPhrase(left)} and ${operandPhrase(right)} to get ${formatNumber(value)}.`;
+          } else if (token.value === "-") {
+            value = left.value - right.value;
+            sentence = `Subtract ${operandPhrase(right)} from ${operandPhrase(left)} to get ${formatNumber(value)}.`;
+          } else if (token.value === "*") {
+            value = left.value * right.value;
+            sentence = `Multiply ${operandPhrase(left)} by ${operandPhrase(right)} to get ${formatNumber(value)}.`;
+          } else if (token.value === "/") {
+            if (Math.abs(right.value) < 1e-12) {
+              throw new Error("Division by zero is not allowed.");
+            }
+            value = left.value / right.value;
+            sentence = `Divide ${operandPhrase(left)} by ${operandPhrase(right)} to get ${formatNumber(value)}.`;
+          } else {
+            throw new Error("That operator is not supported.");
+          }
+
+          const display = formatNumber(value);
+          steps.push(sentence);
+          stack.push({
+            value,
+            display,
+            phrase: display,
+            percent: false,
+          });
+        }
+
+        if (stack.length !== 1) {
+          throw new Error("I could not finish evaluating that expression.");
+        }
+
+        return {
+          value: stack[0].value,
+          display: stack[0].display,
+          steps,
+        };
+      }
+
+      function buildExplanation(expression, display, steps) {
+        if (steps.length === 1) {
+          return `The expression ${expression} evaluates to ${display}. ${steps[0]}`;
+        }
+
+        const firstStep = steps[0];
+        const lastStep = steps[steps.length - 1];
+        return `The expression ${expression} equals ${display}. First, ${firstStep.charAt(0).toLowerCase() + firstStep.slice(1)} Then, ${lastStep.charAt(0).toLowerCase() + lastStep.slice(1)}`;
+      }
+
+      function renderSteps(steps) {
+        stepsNode.innerHTML = "";
+        steps.forEach((step) => {
+          const li = document.createElement("li");
+          li.textContent = step;
+          stepsNode.appendChild(li);
+        });
+      }
+
+      function renderHistory() {
+        historyNode.innerHTML = "";
+
+        if (history.length === 0) {
+          const li = document.createElement("li");
+          li.textContent = "No calculations yet.";
+          historyNode.appendChild(li);
+          return;
+        }
+
+        history.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = `${item.expression} = ${item.result}`;
+          historyNode.appendChild(li);
+        });
+      }
+
+      function clearStatus() {
+        statusNode.textContent = "";
+      }
+
+      function setStatus(message) {
+        statusNode.textContent = message;
+      }
+
+      function evaluateExpression() {
+        const raw = normalizeOperators(expressionInput.value);
+
+        if (!raw) {
+          resultInput.value = "0";
+          explanationNode.textContent =
+            "Enter a calculation and I will explain the result in everyday language.";
+          renderSteps([
+            "Type an expression such as 12 + 8 / 4.",
+            "Press = or hit the Enter key.",
+            "Read the result and plain-English summary here.",
+          ]);
+          summaryPill.textContent = "Ready for a calculation";
+          clearStatus();
+          return;
+        }
+
         try {
-          await navigator.clipboard.writeText(window.location.href);
-          shareButton.textContent = "Link Copied";
-          window.setTimeout(() => {
-            shareButton.textContent = "Copy Site Link";
-          }, 1600);
-        } catch {
-          shareButton.textContent = "Copy failed";
+          const tokens = tokenize(raw);
+          const postfix = toPostfix(tokens);
+          const outcome = evaluatePostfix(postfix);
+          const explanation = buildExplanation(raw, outcome.display, outcome.steps);
+
+          resultInput.value = outcome.display;
+          explanationNode.textContent = explanation;
+          renderSteps(outcome.steps);
+          summaryPill.textContent = `${raw} = ${outcome.display}`;
+          clearStatus();
+
+          history.unshift({ expression: raw, result: outcome.display });
+          if (history.length > 6) {
+            history.pop();
+          }
+          renderHistory();
+        } catch (error) {
+          resultInput.value = "Error";
+          explanationNode.textContent =
+            "I could not solve that yet because the expression needs a small fix.";
+          renderSteps([
+            error.message,
+            "Check the numbers, operators, and parentheses, then try again.",
+          ]);
+          summaryPill.textContent = "Needs a small fix";
+          setStatus(error.message);
         }
       }
 
-      shareButton.addEventListener("click", copySiteLink);
-
-      try {
-        loadQuote();
-      } catch {
-        document.getElementById("quote").textContent =
-          "The quote could not be loaded yet.";
-        document.getElementById("author").textContent = "";
-        document.getElementById("source").textContent = "";
-        document.getElementById("updated").textContent =
-          "The site data is still being prepared.";
-        shareButton.disabled = true;
+      function insertValue(value) {
+        const start = expressionInput.selectionStart;
+        const end = expressionInput.selectionEnd;
+        const current = expressionInput.value;
+        expressionInput.value = `${current.slice(0, start)}${value}${current.slice(end)}`;
+        const caret = start + value.length;
+        expressionInput.focus();
+        expressionInput.setSelectionRange(caret, caret);
       }
+
+      function applyPercentShortcut() {
+        const selection = expressionInput.value;
+        if (!selection) {
+          insertValue("%");
+          return;
+        }
+        insertValue("%");
+      }
+
+      document.querySelector(".keypad").addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) {
+          return;
+        }
+
+        const { action, value } = button.dataset;
+
+        if (value) {
+          insertValue(value);
+          clearStatus();
+          return;
+        }
+
+        if (action === "clear") {
+          expressionInput.value = "";
+          evaluateExpression();
+          return;
+        }
+
+        if (action === "backspace") {
+          const start = expressionInput.selectionStart;
+          const end = expressionInput.selectionEnd;
+          const current = expressionInput.value;
+
+          if (start !== end) {
+            expressionInput.value = `${current.slice(0, start)}${current.slice(end)}`;
+            expressionInput.setSelectionRange(start, start);
+          } else if (start > 0) {
+            expressionInput.value = `${current.slice(0, start - 1)}${current.slice(end)}`;
+            expressionInput.setSelectionRange(start - 1, start - 1);
+          }
+
+          expressionInput.focus();
+          clearStatus();
+          return;
+        }
+
+        if (action === "percent") {
+          applyPercentShortcut();
+          clearStatus();
+          return;
+        }
+
+        if (action === "negate") {
+          const current = expressionInput.value.trim();
+          expressionInput.value = current ? `-(${current})` : "-";
+          expressionInput.focus();
+          clearStatus();
+          return;
+        }
+
+        if (action === "evaluate") {
+          evaluateExpression();
+        }
+      });
+
+      expressionInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          evaluateExpression();
+        }
+      });
+
+      document.querySelectorAll("[data-example]").forEach((button) => {
+        button.addEventListener("click", () => {
+          expressionInput.value = button.dataset.example;
+          evaluateExpression();
+        });
+      });
+
+      evaluateExpression();
+      renderHistory();
     </script>
   </body>
 </html>

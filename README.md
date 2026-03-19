@@ -1,94 +1,66 @@
-# Daily Quote Automation
+# Dwight Calculator
 
-This project gives you a simple automation and a small website.
+Dwight Calculator is a real browser-based calculator with a plain-English math helper.
 
-Every day, GitHub can run a Python script that picks a quote and updates:
+It lets you:
 
-- a website page,
-- a JSON data file,
-- a quote history file.
+- type expressions like `12 + 8 / 4`
+- use calculator buttons for common operations
+- calculate percentages such as `150 * 15%`
+- read a simple explanation of how the answer was produced
+- review a short history of recent calculations
 
-## What GitHub Is Doing For You
+## What Is In This Project
 
-GitHub Actions is the automation tool here.
+- `docs/index.html` contains the full calculator app.
+- `docs/latest-quote.json` is a leftover file from the old quote version and is no longer used.
+- `scripts/generate_quote.py` is a leftover script from the old quote version and is no longer used.
+- `.github/workflows/daily-quote.yml` is a leftover workflow from the old quote version and is no longer used.
 
-It does this automatically:
+## How To Run It Locally
 
-1. opens your repository on GitHub,
-2. runs the Python script,
-3. saves the newest quote,
-4. updates the files in your repository.
-
-That means you do not have to manually change the quote every day.
-
-## What You Can View
-
-This project includes a simple webpage in `docs/index.html`.
-
-After you push the repo to GitHub and turn on GitHub Pages, you will be able to open a public link like:
-
-`https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/`
-
-That page will show the latest daily quote.
-
-## Files You Should Know
-
-- `scripts/generate_quote.py` picks the quote and writes the updated files.
-- `.github/workflows/daily-quote.yml` tells GitHub when to run the automation.
-- `docs/index.html` is the website page.
-- `docs/latest-quote.json` stores the newest quote for the page.
-- `quotes-history.md` keeps a record of past quotes.
-
-## Project Structure
-
-```text
-.
-|-- .github/
-|   `-- workflows/
-|       `-- daily-quote.yml
-|-- docs/
-|   |-- index.html
-|   `-- latest-quote.json
-|-- scripts/
-|   `-- generate_quote.py
-|-- .gitignore
-|-- quotes-history.md
-`-- README.md
-```
-
-## How To Put It On GitHub
-
-1. Create a new empty repository on GitHub.
-2. Upload these files, or use Git commands to push them.
-3. Open the `Actions` tab and run `Daily Quote Automation` once.
-4. Open the repository `Settings`.
-5. Find `Pages`.
-6. Set the source to `Deploy from a branch`.
-7. Choose the `main` branch and the `/docs` folder.
-8. Save it.
-
-After that, GitHub will give you a website link for your quote page.
-
-## Git Commands To Push It
+From the project folder:
 
 ```powershell
-git add .
-git commit -m "Add daily quote automation"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-git push -u origin main
+python -m http.server 8000
 ```
 
-## How To Change The Quotes Later
+Then open:
 
-Open `scripts/generate_quote.py` and edit the `QUOTES` list.
+`http://localhost:8000/docs/`
 
-You can replace the quote text and author names with your own favorites.
+## Supported Math
 
-## Beginner Explanation
+- addition: `4 + 5`
+- subtraction: `9 - 3`
+- multiplication: `7 * 6`
+- division: `20 / 5`
+- parentheses: `(18 - 6) * 3`
+- decimals: `2.5 * 4`
+- percent values: `150 * 15%`
 
-Think of the project like this:
+## Plain-English Explanations
 
-- the Python file chooses the quote,
-- GitHub runs it every day,
-- the website shows the result.
+When you calculate something, the app:
+
+1. reads the expression,
+2. evaluates it in the correct order,
+3. writes short step-by-step explanations in everyday language.
+
+Example:
+
+- `12 + 8 / 4`
+- first it divides `8 / 4` to get `2`
+- then it adds `12 + 2` to get `14`
+
+## Deploying With GitHub Pages
+
+Because the app is a static HTML file in `docs/index.html`, you can deploy it with GitHub Pages.
+
+1. Push the repository to GitHub.
+2. Open the repository settings.
+3. Go to `Pages`.
+4. Set the source to `Deploy from a branch`.
+5. Choose `main` and the `/docs` folder.
+
+GitHub Pages will then host the calculator site for you.
