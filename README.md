@@ -13,21 +13,19 @@ It lets you:
 ## What Is In This Project
 
 - `docs/index.html` contains the full calculator app.
-- `docs/latest-quote.json` is a leftover file from the old quote version and is no longer used.
-- `scripts/generate_quote.py` is a leftover script from the old quote version and is no longer used.
-- `.github/workflows/daily-quote.yml` is a leftover workflow from the old quote version and is no longer used.
+- `scripts/serve.js` starts a small local server for previewing the app in a browser.
 
 ## How To Run It Locally
 
 From the project folder:
 
 ```powershell
-python -m http.server 8000
+node scripts/serve.js
 ```
 
 Then open:
 
-`http://localhost:8000/docs/`
+`http://127.0.0.1:4173/docs/`
 
 ## Supported Math
 
